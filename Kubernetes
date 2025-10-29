@@ -1,0 +1,59 @@
+In Kubernetes, labels are key-value pairs attached to objects such as Pods, Deployments, Services, etc. They are used to organize, categorize, and select subsets of objects.
+
+They don’t directly affect how a pod runs — instead, they make it easier to identify, filter, and group resources.
+
+🏷️ Example of labels in a Pod YAML
+
+Here’s a simple example:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+  labels:
+    app: myapp
+    tier: frontend
+    environment: production
+spec:
+  containers:
+    - name: myapp-container
+      image: nginx
+
+🔍 Explanation
+
+metadata.labels → defines labels for the pod.
+In this case:
+
+app: myapp
+tier: frontend
+environment: production
+
+
+These labels can later be used by other Kubernetes objects — for example:
+
+A Service can select pods using these labels:
+
+selector:
+  app: myapp
+  tier: frontend
+
+
+A Deployment can manage all pods with a given label.
+
+You can use labels to filter pods:
+
+kubectl get pods -l app=myapp
+
+🧩 Why labels are important
+Purpose	Example
+Organization	Tag pods by environment (dev, staging, prod)
+Selection	Services or Deployments use labels to find matching pods
+Filtering	Easily list or delete resources by label
+Automation	CI/CD or monitoring tools use labels to track resources
+🧠 Key rules for labels
+
+Must be key-value pairs (e.g., app: nginx)
+
+Keys can include slashes for namespaces (e.g., team/name: backend)
+
+Values are plain strings (no spaces, typically lowercase)
